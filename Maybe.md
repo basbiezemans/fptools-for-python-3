@@ -12,7 +12,7 @@ class Just(Monad):
     pass
 
 class Nothing(Monad):
-  	# Override
+    # Override
     def map(self, f: Callable[[Any], Any]) -> Functor:
         return self
     # Override
@@ -31,15 +31,15 @@ def fromMaybe(default, maybe):
 
 # Scenario 1: value is 6
 x = Maybe(6)
-f = lambda x: Maybe(x ** 2)
+y = x.bind(lambda x: Maybe(x ** 2))
 print(repr(x))                          # Just(6)
-print(repr(x.bind(f)))                  # Just(36)
-print('value: ' + str(fromMaybe(0, x))) # value: 6
+print(repr(y))                          # Just(36)
+print('value: ' + str(fromMaybe(0, y))) # value: 36
 
 # Scenario 2: value is None
 x = Maybe(None)
-f = lambda x: Maybe(x ** 2)
+y = x.bind(lambda x: Maybe(x ** 2))
 print(repr(x))                          # Nothing(None)
-print(repr(x.bind(f)))                  # Nothing(None)
-print('value: ' + str(fromMaybe(0, x))) # value: 0
+print(repr(y))                          # Nothing(None)
+print('value: ' + str(fromMaybe(0, y))) # value: 0
 ```
