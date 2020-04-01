@@ -31,8 +31,8 @@ if __name__ == '__main__':
 
     f = lambda x: x ** 2
     g = lambda x: x + 6
-    assert(list(map(pipe(f, g), [1,2,3])) == [7,10,15])
-    assert(list(map(compose(g, f), [1,2,3])) == [7,10,15])
+    assert list(map(pipe(f, g), [1,2,3])) == [7,10,15]
+    assert list(map(compose(g, f), [1,2,3])) == [7,10,15]
 
     @curry
     def add(a: int, b: int):

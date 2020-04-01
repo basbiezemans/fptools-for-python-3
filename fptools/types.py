@@ -42,8 +42,8 @@ class Monad(Functor):
 
 if __name__ == '__main__':
 
-    assert(True if DataType(42) else False)
-    assert(False if DataType(None) else True)
+    assert True if DataType(42) else False
+    assert False if DataType(None) else True
 
     m = """
         Functors should preserve composition of morphisms
@@ -54,7 +54,7 @@ if __name__ == '__main__':
     g = lambda x: x + 6
     a = Functor(6).map(compose(g, f))
     b = Functor(6).map(f).map(g)
-    assert(repr(a) == repr(b)), m
+    assert repr(a) == repr(b), m
 
     m = """
         Applicatives should be interchangeable
@@ -64,7 +64,7 @@ if __name__ == '__main__':
     f = lambda x: x ** 2
     a = Applicative(6).map(f)
     b = Applicative(f).apply(Applicative(6))
-    assert(repr(a) == repr(b)), m
+    assert repr(a) == repr(b), m
 
     m = """
         Monads should preserve associativity
@@ -75,4 +75,4 @@ if __name__ == '__main__':
     g = lambda x: Monad(x + 6)
     a = Monad(6).bind(f).bind(g)
     b = Monad(f(6).bind(g)).join()
-    assert(repr(a) == repr(b)), m
+    assert repr(a) == repr(b), m
