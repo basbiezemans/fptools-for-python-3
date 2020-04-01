@@ -1,6 +1,6 @@
 # Functional Programming tools for Python 3
 
-Python 3 has a functools module with functions like `partial` and `reduce`. This library contains a few more building blocks for functional programming in Python 3.
+Python 3 has a functools module with handy functions like `partial` and `reduce`. This library contains a few more building blocks for functional programming in Python 3.
 
 **types**
 
@@ -13,3 +13,4 @@ Python 3 has a functools module with functions like `partial` and `reduce`. This
 
 * pipe
 * compose
+* curry (decorator)

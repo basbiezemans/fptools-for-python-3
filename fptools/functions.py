@@ -15,6 +15,17 @@ def compose(*funs: [Callable[..., Any]]):
     """
     return pipe(*reversed(funs))
 
+def curry(f: Callable, *args):
+    """
+    Decorator to transform a regular function into a curried function.
+    """
+    def wrapper():
+        try:
+            return f(*args)
+        except TypeError:
+            return lambda *more: curry(f, *args, *more)
+    return wrapper()
+
 
 if __name__ == '__main__':
 
@@ -22,3 +33,10 @@ if __name__ == '__main__':
     g = lambda x: x + 6
     assert(list(map(pipe(f, g), [1,2,3])) == [7,10,15])
     assert(list(map(compose(g, f), [1,2,3])) == [7,10,15])
+
+    @curry
+    def add(a: int, b: int):
+        return a + b
+
+    add2 = add(2)
+    assert add2(3) == 5
