@@ -1,5 +1,5 @@
 from typing import Any, Callable
-from functions import compose
+from .functions import compose
 
 class DataType():
     """ Default data type with semi-private _value property.
