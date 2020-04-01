@@ -6,7 +6,8 @@ We can implement this as follows:
 
 ```python
 from typing import Any, Callable
-from types import Monad
+from fptools.types import Functor, Monad
+from fptools.functions import curry
 
 class Just(Monad):
     pass
@@ -26,20 +27,36 @@ def Maybe(value):
 def isNothing(maybe):
     return isinstance(maybe, Nothing)
 
+@curry
 def fromMaybe(default, maybe):
     return default if isNothing(maybe) else maybe._value
-
-# Scenario 1: value is 6
-x = Maybe(6)
-y = x.bind(lambda x: Maybe(x ** 2))
-print(repr(x))                          # Just(6)
-print(repr(y))                          # Just(36)
-print('value: ' + str(fromMaybe(0, y))) # value: 36
-
-# Scenario 2: value is None
-x = Maybe(None)
-y = x.bind(lambda x: Maybe(x ** 2))
-print(repr(x))                          # Nothing(None)
-print(repr(y))                          # Nothing(None)
-print('value: ' + str(fromMaybe(0, y))) # value: 0
 ```
+
+Now that we have a Maybe monad, let's see how it works in practice. The following example shows how to safely do a stepwise calculation, even when a step returns a None value.
+
+```python
+from fptools.functions import compose
+
+# Functions f and g represent our computations
+f = lambda x: Maybe(x ** 2)
+g = lambda x: Maybe(x + 6)
+
+# Function show unwraps a Maybe value and casts it to a string
+show = compose(str, fromMaybe(0))
+
+# Scenario 1
+x = Maybe(6)
+y = x.bind(f).bind(g)
+print(repr(x))                          # Just(6)
+print(repr(y))                          # Just(42)
+print('result: ' + show(y))             # result: 42
+
+# Scenario 2
+f = lambda x: Maybe(None)               # Oops!
+x = Maybe(6)
+y = x.bind(f).bind(g)
+print(repr(x))                          # Just(6)
+print(repr(y))                          # Nothing(None)
+print('result: ' + show(y))             # result: 0
+```
+
