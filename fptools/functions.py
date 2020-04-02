@@ -25,18 +25,3 @@ def curry(f: Callable, *args):
         except TypeError:
             return lambda *more: curry(f, *args, *more)
     return wrapper()
-
-
-if __name__ == '__main__':
-
-    f = lambda x: x ** 2
-    g = lambda x: x + 6
-    assert list(map(pipe(f, g), [1,2,3])) == [7,10,15]
-    assert list(map(compose(g, f), [1,2,3])) == [7,10,15]
-
-    @curry
-    def add(a: int, b: int):
-        return a + b
-
-    add2 = add(2)
-    assert add2(3) == 5
