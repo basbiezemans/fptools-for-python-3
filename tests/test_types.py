@@ -13,6 +13,12 @@ class TestTypes(TestCase):
         self.assertEqual(a, DataType(42))
         self.assertNotEqual(a, b)
 
+    def test_datatype_value(self):
+        a = DataType(42)
+        self.assertEqual(a.value(), 42)
+        with self.assertRaises(AttributeError):
+            a.__value
+
     def test_functor(self):
         m = """
             Functors should preserve composition of morphisms
