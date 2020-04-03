@@ -7,6 +7,12 @@ class TestTypes(TestCase):
         self.assertTrue(True if DataType(42) else False)
         self.assertFalse(True if DataType(None) else False)
 
+    def test_datatype_equality(self):
+        a = DataType(42)
+        b = DataType(24)
+        self.assertEqual(a, DataType(42))
+        self.assertNotEqual(a, b)
+
     def test_functor(self):
         m = """
             Functors should preserve composition of morphisms
@@ -29,6 +35,10 @@ class TestTypes(TestCase):
         a = Applicative(6).map(f)
         b = Applicative(f).apply(Applicative(6))
         self.assertEqual(repr(a), repr(b), m)
+
+    def test_applicative_value_error(self):
+        with self.assertRaises(ValueError):
+            Applicative(1).apply(Applicative(6))
 
     def test_monad(self):
         m = """
