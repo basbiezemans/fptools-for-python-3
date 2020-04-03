@@ -2,10 +2,13 @@ from typing import Any, Callable
 from .functions import compose
 
 class DataType():
-    """ Default data type with semi-private _value property.
+    """ Base type
     """
     def __init__(self, value = None):
         self._value = value
+
+    def __eq__(self, other: 'DataType'):
+        return self._value == other._value
 
     def __bool__(self):
         return self._value is not None
