@@ -1,4 +1,4 @@
-from typing import Any, Callable
+from typing import Any, Callable, TypeVar
 from functools import reduce
 
 def pipe(*funs: [Callable[..., Any]]):
@@ -25,3 +25,49 @@ def curry(f: Callable, *args):
         except TypeError:
             return lambda *more: curry(f, *args, *more)
     return wrapper()
+
+F = TypeVar('F', bound = 'Functor')
+A = TypeVar('A', bound = 'Applicative')
+M = TypeVar('M', bound = 'Monad')
+
+@curry
+def fmap(f: Callable[[Any], Any], functor: F) -> F:
+    """
+    Functor map a function.
+    """
+    return functor.map(f)
+
+@curry
+def apply(functor: A, other: A) -> A:
+    """
+    Apply one functor to another.
+    """
+    return functor.apply(other)
+
+@curry
+def bind(f: Callable[[Any], M], monad: M) -> M:
+    """
+    Bind a mapped monadic function.
+    """
+    return monad.bind(f)
+
+@curry
+def liftA(f: Callable, a: F) -> F:
+    """
+    Lift an unary function to actions.
+    """
+    return a.map(f)
+
+@curry
+def liftA2(f: Callable, a: A, b: A) -> A:
+    """
+    Lift a curried binary function to actions.
+    """
+    return a.map(f).apply(b)
+
+@curry
+def liftA3(f: Callable, a: A, b: A, c: A) -> A:
+    """
+    Lift a curried ternary function to actions.
+    """
+    return a.map(f).apply(b).apply(c)
