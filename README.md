@@ -14,3 +14,5 @@ Python 3 has a functools module with handy functions like `partial` and `reduce`
 * pipe
 * compose
 * curry (decorator)
+* fmap, apply, bind
+* liftA, liftA2, liftA3
