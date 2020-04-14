@@ -1,4 +1,5 @@
 from typing import Any, Callable, TypeVar
+from inspect import signature
 from functools import reduce
 
 def pipe(*funs: [Callable[..., Any]]):
@@ -15,16 +16,19 @@ def compose(*funs: [Callable[..., Any]]):
     """
     return pipe(*reversed(funs))
 
-def curry(f: Callable, *args):
+def curry(func: Callable, *a):
     """
     Decorator to transform a regular function into a curried function.
     """
-    def wrapper():
-        try:
-            return f(*args)
-        except TypeError:
-            return lambda *more: curry(f, *args, *more)
-    return wrapper()
+    n = len(signature(func).parameters)
+    def wrapper(*b):
+        c = a + b
+        c = c[:n] # ignore extra args
+        if len(c) == n:
+            return func(*c)
+        else:
+            return curry(func, *c)
+    return wrapper
 
 F = TypeVar('F', bound = 'Functor')
 A = TypeVar('A', bound = 'Applicative')
