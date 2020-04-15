@@ -54,9 +54,9 @@ class TestFunctions(TestCase):
         isLongEnough = lambda s: len(s) >= 5
         isShortEnough = lambda s: len(s) <= 10
         transducer = compose(
-            transduceMap(str.upper),
-            transduceFilter(isLongEnough),
-            transduceFilter(isShortEnough)
+            tmap(str.upper),
+            tfilter(isLongEnough),
+            tfilter(isShortEnough)
         )
         words = 'They have written something very interesting'.split(' ')
         result = ['WRITTEN', 'SOMETHING']

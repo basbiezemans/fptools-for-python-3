@@ -41,7 +41,7 @@ def transduce(transducer: Callable, combinator: Callable, initializer, iterable)
     return reduce(reducer, iterable, initializer)
 
 @curry
-def transduceMap(mapper: Callable, combinator: Callable):
+def tmap(mapper: Callable, combinator: Callable):
     """
     Transducer map-reducer
     """
@@ -50,7 +50,7 @@ def transduceMap(mapper: Callable, combinator: Callable):
     return reducer
 
 @curry
-def transduceFilter(predicate: Callable, combinator: Callable):
+def tfilter(predicate: Callable, combinator: Callable):
     """
     Transducer filter-reducer
     """
