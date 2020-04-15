@@ -1,6 +1,7 @@
-from typing import Any, Callable, TypeVar
+from typing import Any, Iterator, Iterable, Callable, TypeVar
 from inspect import signature
 from functools import reduce
+from itertools import islice
 
 def pipe(*funs: [Callable[..., Any]]):
     """
@@ -29,6 +30,26 @@ def curry(func: Callable, *a):
         else:
             return curry(func, *c)
     return wrapper
+
+def iterate(func: Callable, x: Any) -> Iterator:
+    """
+    Create an infinite list of values f(x) starting with x.
+    """
+    while True:
+        yield x
+        x = func(x)
+
+def take(n: int, xs: Iterable) -> Iterator:
+    """
+    Return the first n items of the iterable.
+    """
+    return islice(xs, n)
+
+def drop(n: int, xs: Iterable) -> Iterator:
+    """
+    Return the part of the iterable after the first n items.
+    """
+    return islice(xs, n, None)
 
 def transduce(transducer: Callable, combinator: Callable, initializer, iterable):
     """

@@ -1,4 +1,5 @@
 from unittest import TestCase
+from itertools import islice
 from fptools.types import *
 from fptools.functions import *
 
@@ -59,5 +60,18 @@ class TestFunctions(TestCase):
             tfilter(isShortEnough)
         )
         words = 'They have written something very interesting'.split(' ')
-        result = ['WRITTEN', 'SOMETHING']
-        self.assertEqual(result, transduce(transducer, listCombine, [], words))
+        expected = ['WRITTEN', 'SOMETHING']
+        self.assertEqual(expected, transduce(transducer, listCombine, [], words))
+
+    def test_iterate(self):
+        add1 = lambda x: x + 1
+        expected = (1, 2, 3)
+        self.assertEqual(expected, tuple(islice(iterate(add1, 1), 3)))
+
+    def test_take(self):
+        expected = (0, 1, 2)
+        self.assertEqual(expected, tuple(take(3, range(10))))
+
+    def test_drop(self):
+        expected = (7, 8, 9)
+        self.assertEqual(expected, tuple(drop(7, range(10))))
