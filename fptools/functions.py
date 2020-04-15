@@ -30,6 +30,36 @@ def curry(func: Callable, *a):
             return curry(func, *c)
     return wrapper
 
+def transduce(transducer: Callable, combinator: Callable, initializer, iterable):
+    """
+    Transduce uses a transducer function to transform and reduce the items of a
+    sequence to a single value.
+    A transducer is a composable higher-order reducer. It takes a reducer as input,
+    and returns another reducer.
+    """
+    reducer = transducer(combinator)
+    return reduce(reducer, iterable, initializer)
+
+@curry
+def transduceMap(mapper: Callable, combinator: Callable):
+    """
+    Transducer map-reducer
+    """
+    def reducer(list, value):
+        return combinator(list, mapper(value))
+    return reducer
+
+@curry
+def transduceFilter(predicate: Callable, combinator: Callable):
+    """
+    Transducer filter-reducer
+    """
+    def reducer(list, value):
+        if (predicate(value)):
+            return combinator(list, value)
+        return list
+    return reducer
+
 F = TypeVar('F', bound = 'Functor')
 A = TypeVar('A', bound = 'Applicative')
 M = TypeVar('M', bound = 'Monad')

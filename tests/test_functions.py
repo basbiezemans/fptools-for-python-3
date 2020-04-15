@@ -48,3 +48,16 @@ class TestFunctions(TestCase):
         self.assertEqual(repr(liftA(e, a)), 'Applicative(36)')
         self.assertEqual(repr(liftA2(f, a, b)), 'Applicative(42)')
         self.assertEqual(repr(liftA3(g, a, b, c)), 'Applicative(69)')
+
+    def test_transduce(self):
+        listCombine = lambda list, val: list + [val]
+        isLongEnough = lambda s: len(s) >= 5
+        isShortEnough = lambda s: len(s) <= 10
+        transducer = compose(
+            transduceMap(str.upper),
+            transduceFilter(isLongEnough),
+            transduceFilter(isShortEnough)
+        )
+        words = 'They have written something very interesting'.split(' ')
+        result = ['WRITTEN', 'SOMETHING']
+        self.assertEqual(result, transduce(transducer, listCombine, [], words))
