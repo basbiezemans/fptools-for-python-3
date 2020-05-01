@@ -34,29 +34,30 @@ Now that we have a Maybe monad, let's see how it can be used in practice. The fo
 
 ```python
 from functools import partial
-from fptools.functions import compose
+from fptools.functions import compose, bind
 
 # Functions f and g represent our calculation
 # It looks like function f will fail when the
 # input is a number equal or greater than 7
 f = lambda x: Maybe(x ** 2 if x < 7 else None)
 g = lambda x: Maybe(x + 6)
+calc = compose(bind(g), bind(f))
 
 # Unwrap a Maybe value and cast it to a string
 show = compose(str, partial(fromMaybe, 0))
 
 # Scenario 1
 x = Maybe(6)
-y = x.bind(f).bind(g)
+y = calc(x)
 print(repr(x))                          # Just(6)
 print(repr(y))                          # Just(42)
-print('result: ' + show(y))             # result: 42
+print('result:', show(y))               # result: 42
 
 # Scenario 2
 x = Maybe(9)
-y = x.bind(f).bind(g)
+y = calc(x)
 print(repr(x))                          # Just(9)
 print(repr(y))                          # Nothing(None)
-print('result: ' + show(y))             # result: 0
+print('result:', show(y))               # result: 0
 ```
 
