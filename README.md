@@ -7,7 +7,9 @@ Python 3 has functools and itertools modules with many handy functions. This lib
 * DataType (base type)
 * Functor
 * Applicative Functor
-* Monad ([example of a Maybe monad](Maybe.md))
+* Monad
+
+[Example of an Either functor](Either.md) | [Example of a Maybe monad](Maybe.md)
 
 **Functions**
 
