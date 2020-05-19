@@ -23,6 +23,8 @@ class Right(Either): pass
 The above code can be extended to implement error handling. For this purpose we use an `either` function. It works like this: if Either is Left then map function f, if Either is Right then map function g. The convention is that Left contains an error message and Right a correct value.
 
 ```python
+from fptools.functions import curry
+
 def isLeft(either: Either):
     return isinstance(either, Left)
 
@@ -73,7 +75,7 @@ nameOf = compose(either(identity, toUpper), \
                  pluck('name'))
 
 for person in people:
-	  print(nameOf(person), ':', ageOf(person))
+    print(nameOf(person), ':', ageOf(person))
 
 # JOHN DOE : 29
 # JANE DOE : No birthday available
