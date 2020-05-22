@@ -47,14 +47,14 @@ calc = compose(bind(g), bind(f))
 show = compose(str, partial(fromMaybe, 0))
 
 # Scenario 1
-x = Maybe(6)
+x = Just(6)
 y = calc(x)
 print(repr(x))                          # Just(6)
 print(repr(y))                          # Just(42)
 print('result:', show(y))               # result: 42
 
 # Scenario 2
-x = Maybe(9)
+x = Just(9)
 y = calc(x)
 print(repr(x))                          # Just(9)
 print(repr(y))                          # Nothing(None)
