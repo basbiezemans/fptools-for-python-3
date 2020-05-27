@@ -9,7 +9,11 @@ Python 3 has functools and itertools modules with many handy functions. This lib
 * Applicative Functor
 * Monad
 
-[Example of an Either functor](Either.md) | [Example of a Maybe monad](Maybe.md)
+*Type Examples*
+
+* [Either functor](Either.md)
+* [IO applicative](IO.md)
+* [Maybe monad](Maybe.md)
 
 **Functions**
 
