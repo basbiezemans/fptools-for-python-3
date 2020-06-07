@@ -33,7 +33,7 @@ class Applicative(Functor):
             return functor.map(self.value())
         raise ValueError('Cannot map a non function')
 
-class Monad(Functor):
+class Monad(Applicative):
     """ Monad type which can bind two monads while mapping between categories.
     """
     def join(self) -> 'Monad':
