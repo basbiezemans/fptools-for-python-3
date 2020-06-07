@@ -1,6 +1,6 @@
 ## Maybe monad
 
-Let's say we want to do a sequence of operations on a value but it's possible that this value becomes `None` during any one operation. A None value isn't very useful to us and can potentially break our code. To avoid this problem we decide to treat a value as "maybe just a value, or nothing".
+Let's say we want to do a sequence of operations on a value but it's possible that this value becomes `None` during any one operation. A None value isn't very useful to us and can potentially break our code. To avoid this problem we decide to treat a value as "maybe nothing, or just a value".
 
 We can implement this as follows:
 
@@ -12,9 +12,6 @@ class Just(Monad):
     pass
 
 class Nothing(Monad):
-    # Override
-    def map(self, f: Callable):
-        return self
     # Override
     def bind(self, f: Callable):
         return self
@@ -49,15 +46,15 @@ show = compose(str, partial(fromMaybe, 0))
 # Scenario 1
 x = Just(6)
 y = calc(x)
-print(repr(x))                          # Just(6)
-print(repr(y))                          # Just(42)
-print('result:', show(y))               # result: 42
+print(repr(x))                    # Just(6)
+print(repr(y))                    # Just(42)
+print('result:', show(y))         # result: 42
 
 # Scenario 2
 x = Just(9)
 y = calc(x)
-print(repr(x))                          # Just(9)
-print(repr(y))                          # Nothing(None)
-print('result:', show(y))               # result: 0
+print(repr(x))                    # Just(9)
+print(repr(y))                    # Nothing(None)
+print('result:', show(y))         # result: 0
 ```
 
