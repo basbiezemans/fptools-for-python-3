@@ -28,9 +28,9 @@ class TestFunctions(TestCase):
         self.assertEqual(repr(y), 'Functor(36)')
 
     def test_apply(self):
-        f = lambda x: x ** 2
+        f = Applicative(lambda x: x ** 2)
         x = Applicative(6)
-        y = apply(Applicative(f), x)
+        y = apply(x, f)
         self.assertEqual(repr(y), 'Applicative(36)')
 
     def test_bind(self):

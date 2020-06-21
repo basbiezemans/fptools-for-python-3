@@ -93,7 +93,7 @@ def fmap(f: Callable[[Any], Any], functor: F) -> F:
     return functor.map(f)
 
 @curry
-def apply(functor: A, other: A) -> A:
+def apply(other: A, functor: A) -> A:
     """
     Apply one functor to another.
     """

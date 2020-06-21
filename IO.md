@@ -37,7 +37,8 @@ def signIn(username, password):
     }
 
 # Sign-in with email and password
-user = IO(signIn).apply(getVal('email')).apply(getVal('password'))
+proc = compose(apply(getVal('password')), apply(getVal('email')))
+user = proc(IO(signIn))
 
 # Or using liftA2 (lift Applicative with 2 arguments)
 user = liftA2(signIn, getVal('email'), getVal('password'))
@@ -46,7 +47,7 @@ print(repr(user))
 # IO({'id': 42, 'name': 'John Doe', 'email': 'john.doe@foo.com'})
 ```
 
-The above example can be extended to handle invalid input, by wrapping user input in a [Maybe](Maybe.md) context before lifting it into an I/O context.
+The above example can be extended to handle invalid input, by wrapping user input in an [Either](Either.md) context before lifting it into an I/O context.
 
 ----
 **Footnotes:**
