@@ -36,11 +36,8 @@ def signIn(username, password):
         'email': 'john.doe@foo.com'
     }
 
-# Sign-in with email and password
-proc = compose(apply(getVal('password')), apply(getVal('email')))
-user = proc(IO(signIn))
-
-# Or using liftA2 (lift Applicative with 2 arguments)
+# Sign-in with email and password using
+# liftA2 (lift Applicative with 2 arguments)
 user = liftA2(signIn, getVal('email'), getVal('password'))
 
 print(repr(user))
