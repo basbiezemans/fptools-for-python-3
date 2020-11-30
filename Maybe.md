@@ -17,7 +17,7 @@ class Nothing(Monad):
         return self
 
 # Constructor function
-def Maybe(value):
+def maybe(value):
     return Nothing() if value is None else Just(value)
 
 def isNothing(maybe):
@@ -36,8 +36,8 @@ from fptools.functions import compose, bind
 # Functions f and g represent our calculation
 # It looks like function f will fail when the
 # input is a number equal or greater than 7
-f = lambda x: Maybe(x ** 2 if x < 7 else None)
-g = lambda x: Maybe(x + 6)
+f = lambda x: maybe(x ** 2 if x < 7 else None)
+g = lambda x: maybe(x + 6)
 calc = compose(bind(g), bind(f))
 
 # Unwrap a Maybe value and cast it to a string
